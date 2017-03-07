@@ -17,7 +17,7 @@ angular.module('gridTest', [
       <my-grid assets="vm.assets" days="vm.days"></my-grid>
     `,
     controller: function() {
-      this.assets = 250;
+      this.assets = 125;
       this.days = 90;
     },
     controllerAs: 'vm'

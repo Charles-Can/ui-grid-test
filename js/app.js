@@ -14736,8 +14736,8 @@ class GridController {
       rowHeight: 45,
 
       //virtualized scrolling attrs
-      excessColumns: 45,
-      excessRows: 20
+      excessColumns: 8,
+      excessRows: 8 
     };
     this.service = assetService;
   }
@@ -14763,10 +14763,7 @@ class GridController {
           }
           if(isDate) {
             def.cellTemplate = `
-              <div class="runtime">{{COL_FIELD.runningDurationSeconds}}</div>
-              <div class="ratio">
-                <div class="idle-ratio" ng-style="{'width' : COL_FIELD.runningDurationSeconds + '%' }"></div>
-              </div>
+              <div class="runtime" ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">{{COL_FIELD.runningDurationSeconds}}</div>
             `;
           }
           columnDefs.push(def);
@@ -14775,7 +14772,6 @@ class GridController {
       });
   }
 }
-
 
 angular.module('gridTest')
   .service('assetService', __WEBPACK_IMPORTED_MODULE_0__asset_service_js__["a" /* AssetService */])
@@ -14852,7 +14848,7 @@ class AssetService {
   }
 
   generateRandomRuntime() {
-    return Math.floor( ( Math.random() * 24 ) + 1 );
+    return ( Math.random() * 24 ).toFixed(1);
   }
 
   generateRandomIdlePercentage() {
@@ -76551,7 +76547,7 @@ angular.module('gridTest', [
       <my-grid assets="vm.assets" days="vm.days"></my-grid>
     `,
     controller: function() {
-      this.assets = 250;
+      this.assets = 125;
       this.days = 90;
     },
     controllerAs: 'vm'

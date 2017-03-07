@@ -37,7 +37,7 @@ export class AssetService {
   }
 
   generateRandomRuntime() {
-    return Math.floor( ( Math.random() * 24 ) + 1 );
+    return ( Math.random() * 24 ).toFixed(1);
   }
 
   generateRandomIdlePercentage() {

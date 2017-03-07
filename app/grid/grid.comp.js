@@ -13,8 +13,8 @@ class GridController {
       rowHeight: 45,
 
       //virtualized scrolling attrs
-      excessColumns: 45,
-      excessRows: 20
+      excessColumns: 10,
+      excessRows: 10
     };
     this.service = assetService;
   }
@@ -40,10 +40,7 @@ class GridController {
           }
           if(isDate) {
             def.cellTemplate = `
-              <div class="runtime">{{COL_FIELD.runningDurationSeconds}}</div>
-              <div class="ratio">
-                <div class="idle-ratio" ng-style="{'width' : COL_FIELD.runningDurationSeconds + '%' }"></div>
-              </div>
+              <div class="runtime" ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">{{COL_FIELD.runningDurationSeconds}}</div>
             `;
           }
           columnDefs.push(def);
@@ -52,7 +49,6 @@ class GridController {
       });
   }
 }
-
 
 angular.module('gridTest')
   .service('assetService', AssetService)
