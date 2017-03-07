@@ -1,0 +1,22 @@
+{
+  "name": "ui-grid-test",
+  "scripts": {
+    "start": "concurrently \"lite-server\" \"webpack --progress --colors --watch\""
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {},
+  "author": "charles_candelaria@trimble.com <charles_candelaria@trimble.com>",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.5.9",
+    "angular-ui-grid": "^4.0.2",
+    "bootstrap-sass": "^3.3.7",
+    "concurrently": "^3.4.0",
+    "guid": "0.0.12",
+    "lite-server": "^2.2.2",
+    "moment": "^2.17.1",
+    "webpack": "^2.2.1"
+  },
+  "devDependencies": {}
+}
