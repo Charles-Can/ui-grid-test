@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -8,10 +9,10 @@ const extractSass = new ExtractTextPlugin({
 
 
 module.exports = {
-  entry: './app/index.js',
+  entry: {app: './app/index.js', vendor: ['angular', 'angular-route','moment','angular-ui-grid']},
   output: {
     path: path.resolve(__dirname, 'js'),
-    filename: 'app.js',
+    filename: '[name].js',
     publicPath: '/js/'
   },
   module: {
@@ -47,6 +48,8 @@ module.exports = {
     ]
   },
   plugins: [
-    extractSass
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+      })
   ]  
 };
