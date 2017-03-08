@@ -1,7 +1,10 @@
-import { AssetService } from './asset.service.js';
+import { AssetService } from '../asset.service.js';
 
 class GridController {
-  constructor(assetService) {
+  constructor(assetService, $routeParams) {
+    this.$routeParams = $routeParams;
+    this.days;
+    this.assets;
     this.$inject = ['assetService']
     this.gridOptions = {
       data: [],
@@ -20,6 +23,8 @@ class GridController {
   }
 
   $onInit() {
+    this.days = this.$routeParams['days'] || 31;
+    this.assets = this.$routeParams['assets'] || 25;
     this.service.generateAssets(this.assets, this.days)
       .then( data => {
         this.gridOptions.data = data; 
@@ -56,10 +61,6 @@ angular.module('gridTest')
     template: `
       <div id="grid" ui-grid="$ctrl.gridOptions" ui-grid-pinning></div>
     `,
-    controller: GridController,
-    bindings: {
-      assets: '<',
-      days: '<'
-    }
+    controller: GridController
   });
 

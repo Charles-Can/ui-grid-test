@@ -9,7 +9,8 @@
   "author": "charles_candelaria@trimble.com <charles_candelaria@trimble.com>",
   "license": "MIT",
   "dependencies": {
-    "angular": "1.5.9",
+    "angular": "1.5.8",
+    "angular-route": "1.5.8",
     "angular-ui-grid": "^4.0.2",
     "bootstrap-sass": "^3.3.7",
     "concurrently": "^3.4.0",

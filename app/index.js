@@ -2,25 +2,32 @@ var angular = require('angular');
 
 angular.module('gridTest', [
   require('angular-ui-grid'),
+  require('angular-route'),
   'ui.grid.pinning'
 ])
   .component('myApp', {
     template: `
       <div class="row">
-        <div class="col-sm-6">
-          <h1>Grid Test </h1>
-        </div>
-        <div class="col-sm-3 col-md-offset-3">
-          <span class="label label-primary count pull-right">Assets {{vm.assets}} | Days {{vm.days}}</span>
-        </div>
-      </div> 
-      <my-grid assets="vm.assets" days="vm.days"></my-grid>
+        <ul class="list-unstyled list-inline">
+          <li>
+            <a href="/" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('/'), 'btn-primary': vm.isActive('/')}">Home</a>
+            <a href="ui-grid" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('ui-grid'), 'btn-primary': vm.isActive('ui-grid')}">UI Grid</a>
+          </li>
+        </ul>
+      </div>
+      <div ng-view></div>
     `,
-    controller: function() {
-      this.assets = 125;
-      this.days = 90;
+    controller: function($route, $rootScope) {
+      this.activeRoute = '/';
+      $rootScope.$on('$routeChangeSuccess', ($event, cur) => {
+       this.activeRoute = cur.$$route.name;
+      });
+
+      this.isActive = function(route) {
+        return this.activeRoute === route;
+      }
     },
     controllerAs: 'vm'
   });
-
+require('./routes.js');
 require('./grid/grid.comp.js');
