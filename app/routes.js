@@ -6,11 +6,11 @@ angular.module('gridTest')
       template: '<my-grid></my-grid>' 
     });
 
-    $routeProvider.when('/', {
-      name: '/',
+    $routeProvider.when('/home-brew', {
+      name: 'home-brew',
       controller: function() {},
-      template: ``
+      template: `<home-brew-grid></home-brew-grid>`
     });
-    $routeProvider.otherwise('/');
+    $routeProvider.otherwise('/ui-grid');
     $locationProvider.html5Mode(true);
   });

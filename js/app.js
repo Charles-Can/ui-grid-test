@@ -14720,12 +14720,13 @@ return zhTw;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__asset_service_js__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__asset_service_js__ = __webpack_require__(114);
 
 
 class GridController {
-  constructor(assetService, $routeParams) {
-    this.$routeParams = $routeParams;
+  constructor(assetService, countService) {
+    this.countService = countService;
+    this.sub;
     this.days;
     this.assets;
     this.$inject = ['assetService']
@@ -14746,8 +14747,14 @@ class GridController {
   }
 
   $onInit() {
-    this.days = this.$routeParams['days'] || 31;
-    this.assets = this.$routeParams['assets'] || 25;
+    this.sub = this.countService.subscribe( count => {
+      this.assets = count.assets;
+      this.days = count.days;
+      this.getAssets();
+    });
+  }
+
+  getAssets() {
     this.service.generateAssets(this.assets, this.days)
       .then( data => {
         this.gridOptions.data = data; 
@@ -14768,13 +14775,20 @@ class GridController {
           }
           if(isDate) {
             def.cellTemplate = `
-              <div class="runtime" ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">{{COL_FIELD.runningDurationSeconds}}</div>
+              <div class="runtime" 
+                ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">
+                {{COL_FIELD.runningDurationSeconds}}
+              </div>
             `;
           }
           columnDefs.push(def);
         }
         this.gridOptions.columnDefs = columnDefs;
       });
+  }
+
+  $onDestroy() {
+    this.sub();
   }
 }
 
@@ -14801,12 +14815,12 @@ angular.module('gridTest')
       template: '<my-grid></my-grid>' 
     });
 
-    $routeProvider.when('/', {
-      name: '/',
+    $routeProvider.when('/home-brew', {
+      name: 'home-brew',
       controller: function() {},
-      template: ``
+      template: `<home-brew-grid></home-brew-grid>`
     });
-    $routeProvider.otherwise('/');
+    $routeProvider.otherwise('/ui-grid');
     $locationProvider.html5Mode(true);
   });
 
@@ -14835,7 +14849,60 @@ module.exports = angular;
 
 
 /***/ }),
-/* 114 */,
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const Guid = __webpack_require__(118);
+const Moment = __webpack_require__(0);
+
+class AssetService {
+  constructor( $q ) {
+    this.$q = $q;
+  }
+
+  generateAssets( count=25, days=1 ) {
+    let def = this.$q.defer();
+    let assets = [];
+    for( let i=0; i < count; i++ ) {
+      assets.push( this.generateDays( {
+        assetId: `Asset_${Guid.create().value.substring( 0, 8 )}`,
+        make: Guid.create().value,
+        serialNumber: Guid.create().value
+      }, days ) );
+    }
+    def.resolve(assets);
+    return def.promise;
+  }
+
+  generateDays( asset, offset=1 ) {
+    const today = Moment();
+    const start = Moment().subtract( offset, 'days' );
+    let i=0;
+
+    while( !today.isSame( start.clone().add( i, 'days' ), 'days' ) ) {
+      asset[start.clone().add( i, 'days' ).format( 'MM/DD/YYYY' )] = {
+        runningDurationSeconds: this.generateRandomRuntime(),
+        idleDurationSeconds: this.generateRandomIdlePercentage(),
+        workingDurationSeconds: 0
+      };
+      i++;
+    } 
+    return asset;
+  }
+
+  generateRandomRuntime() {
+    return ( Math.random() * 24 ).toFixed(1);
+  }
+
+  generateRandomIdlePercentage() {
+    return Math.floor( ( Math.random() * 100 ) + 1 );
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = AssetService;
+;
+
+/***/ }),
 /* 115 */
 /***/ (function(module, exports) {
 
@@ -76973,84 +77040,116 @@ angular.module('gridTest', [
 ])
   .component('myApp', {
     template: `
-      <div class="row">
-        <ul class="list-unstyled list-inline">
-          <li>
-            <a href="/" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('/'), 'btn-primary': vm.isActive('/')}">Home</a>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 ctrl">
             <a href="ui-grid" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('ui-grid'), 'btn-primary': vm.isActive('ui-grid')}">UI Grid</a>
-          </li>
-        </ul>
+            <a href="home-brew" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('home-brew'), 'btn-primary': vm.isActive('home-brew')}">Home Brewed Grid</a>
+          </div>
+
+          <div class="col-md-7 ctrl">
+            <div class="pull-right">
+              <label>Assets</label>
+              <select ng-model="vm.assetCount" ng-change="vm.optionChange()">
+                <option ng-repeat="num in vm.assets track by $index" value="{{num}}">{{num}}</option>
+              </select>
+              <label>Weeks</label>
+              <select ng-model="vm.dayCount" ng-change="vm.optionChange()">
+                <option ng-repeat="num in vm.days track by $index" value="{{num}}">{{num/7}} | {{num}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div ng-view></div>
+        </div>
       </div>
-      <div ng-view></div>
     `,
-    controller: function($route, $rootScope) {
+    controller: function($route, $rootScope, countService) {
       this.activeRoute = '/';
+      this.dayCount = '7';
+      this.assetCount = '5';
+      this.days=[];
+      this.assets=[];
       $rootScope.$on('$routeChangeSuccess', ($event, cur) => {
        this.activeRoute = cur.$$route.name;
       });
 
+      this.$onInit = function() {
+        countService.setCount(parseInt(this.assetCount), parseInt(this.dayCount));
+        for(let i=1; i <= 50; i++) {
+          this.assets.push(i * 5);
+          this.days.push(i * 7);
+        }
+      }
+
       this.isActive = function(route) {
         return this.activeRoute === route;
+      }
+
+      this.optionChange = function() {
+        countService.setCount(parseInt(this.assetCount), parseInt(this.dayCount));
       }
     },
     controllerAs: 'vm'
   });
+__webpack_require__(123);
 __webpack_require__(110);
 __webpack_require__(109);
+__webpack_require__(122);
 
 /***/ }),
 /* 122 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-const Guid = __webpack_require__(118);
-const Moment = __webpack_require__(0);
+class HomeBrewController {
 
-class AssetService {
-  constructor( $q ) {
-    this.$q = $q;
+}
+angular.module('gridTest')
+  .component('homeBrewGrid', {
+    controller: HomeBrewController,
+    template: `
+      <h1>Home Brewed!</h1>
+    `
+  });
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports) {
+
+class CountService {
+  constructor() {
+    this.subscribers = [];
+    this.assets;
+    this.days;
+  }
+  getCount() {
+    return {
+      days: this.days,
+      assets: this.assets
+    };
+  }
+  setCount(assets=1, days=1) {
+    this.assets = assets;
+    this.days = days;
+    this.push();
   }
 
-  generateAssets( count=25, days=1 ) {
-    let def = this.$q.defer();
-    let assets = [];
-    for( let i=0; i < count; i++ ) {
-      assets.push( this.generateDays( {
-        assetId: `Asset_${Guid.create().value.substring( 0, 8 )}`,
-        make: Guid.create().value,
-        serialNumber: Guid.create().value
-      }, days ) );
-    }
-    def.resolve(assets);
-    return def.promise;
+  subscribe(fun) {
+    let _this = this;
+    this.subscribers.push(fun);
+    fun(this.getCount());
+    return function() {
+      _this.subscribers = _this.subscribers.filter( f => f !== fun);
+    };
   }
-
-  generateDays( asset, offset=1 ) {
-    const today = Moment();
-    const start = Moment().subtract( offset, 'days' );
-    let i=0;
-
-    while( !today.isSame( start.clone().add( i, 'days' ), 'days' ) ) {
-      asset[start.clone().add( i, 'days' ).format( 'MM/DD/YYYY' )] = {
-        runningDurationSeconds: this.generateRandomRuntime(),
-        idleDurationSeconds: this.generateRandomIdlePercentage(),
-        workingDurationSeconds: 0
-      };
-      i++;
-    } 
-    return asset;
-  }
-
-  generateRandomRuntime() {
-    return ( Math.random() * 24 ).toFixed(1);
-  }
-
-  generateRandomIdlePercentage() {
-    return Math.floor( ( Math.random() * 100 ) + 1 );
+  push() {
+    this.subscribers.map(sub => sub(this.getCount()));
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = AssetService;
-;
+angular.module('gridTest')
+  .service('countService', CountService );
 
 /***/ })
 /******/ ]);

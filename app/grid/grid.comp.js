@@ -1,8 +1,9 @@
 import { AssetService } from '../asset.service.js';
 
 class GridController {
-  constructor(assetService, $routeParams) {
-    this.$routeParams = $routeParams;
+  constructor(assetService, countService) {
+    this.countService = countService;
+    this.sub;
     this.days;
     this.assets;
     this.$inject = ['assetService']
@@ -23,8 +24,14 @@ class GridController {
   }
 
   $onInit() {
-    this.days = this.$routeParams['days'] || 31;
-    this.assets = this.$routeParams['assets'] || 25;
+    this.sub = this.countService.subscribe( count => {
+      this.assets = count.assets;
+      this.days = count.days;
+      this.getAssets();
+    });
+  }
+
+  getAssets() {
     this.service.generateAssets(this.assets, this.days)
       .then( data => {
         this.gridOptions.data = data; 
@@ -45,13 +52,20 @@ class GridController {
           }
           if(isDate) {
             def.cellTemplate = `
-              <div class="runtime" ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">{{COL_FIELD.runningDurationSeconds}}</div>
+              <div class="runtime" 
+                ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">
+                {{COL_FIELD.runningDurationSeconds}}
+              </div>
             `;
           }
           columnDefs.push(def);
         }
         this.gridOptions.columnDefs = columnDefs;
       });
+  }
+
+  $onDestroy() {
+    this.sub();
   }
 }
 
