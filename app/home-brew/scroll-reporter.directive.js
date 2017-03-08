@@ -17,7 +17,7 @@ const linkFn = function(scope, el, attrs) {
     throttledScroll({scrollTop: e.target.scrollTop, scrollLeft: event.target.scrollLeft});
   });
 
-  scope.$on('$destroy')
+  scope.$on('$destroy', () => el.off('scroll'))
 
 };
 

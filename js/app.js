@@ -15127,8 +15127,7 @@ class GridController {
           }
           if(isDate) {
             def.cellTemplate = `
-              <div class="runtime" 
-                ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">
+              <div class="runtime">
                 {{COL_FIELD.runningDurationSeconds}}
               </div>
             `;
@@ -15399,7 +15398,7 @@ const linkFn = function(scope, el, attrs) {
     throttledScroll({scrollTop: e.target.scrollTop, scrollLeft: event.target.scrollLeft});
   });
 
-  scope.$on('$destroy')
+  scope.$on('$destroy', () => el.off('scroll'))
 
 };
 
@@ -77242,7 +77241,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, ".ui-grid-comp .runtime {\n  background: darkblue;\n  color: white;\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  margin: -14px auto 0 auto;\n  text-align: center;\n  padding-top: 5px;\n  font-weight: 700;\n  box-shadow: 0 2px 5px #333;\n  position: relative;\n  top: 50%;\n  font-size: 0.8em; }\n\n.ui-grid-comp .ratio {\n  background: green;\n  height: 11px;\n  width: 35px;\n  margin: 2px auto; }\n\n.ui-grid-comp .idle-ratio {\n  background: orange;\n  height: 100%; }\n\n.ui-grid-comp #grid {\n  height: 850px; }\n", ""]);
+exports.push([module.i, ".ui-grid-comp .runtime {\n  background: darkblue;\n  color: white;\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  margin: -14px auto 0 auto;\n  text-align: center;\n  padding-top: 5px;\n  font-weight: 700;\n  position: relative;\n  top: 50%;\n  font-size: 0.8em; }\n\n.ui-grid-comp .ratio {\n  background: green;\n  height: 11px;\n  width: 35px;\n  margin: 2px auto; }\n\n.ui-grid-comp .idle-ratio {\n  background: orange;\n  height: 100%; }\n\n.ui-grid-comp #grid {\n  height: 850px; }\n", ""]);
 
 // exports
 

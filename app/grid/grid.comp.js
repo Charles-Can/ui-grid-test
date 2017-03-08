@@ -53,8 +53,7 @@ class GridController {
           }
           if(isDate) {
             def.cellTemplate = `
-              <div class="runtime" 
-                ng-style="{'background': 'rgba(0, 0, 80, ' + (COL_FIELD.runningDurationSeconds < 8 ? COL_FIELD.runningDurationSeconds / 24 : 1) + ')', 'color': COL_FIELD.runningDurationSeconds < 8 ? 'black' : 'white'}">
+              <div class="runtime">
                 {{COL_FIELD.runningDurationSeconds}}
               </div>
             `;
