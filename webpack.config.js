@@ -25,15 +25,24 @@ module.exports = {
       }, {
         loader: "sass-loader" // compiles Sass to CSS
       }]
-    },
-    {
-      // Capture eot, ttf, woff, and woff2
-      test: /\.(eot|ttf|woff|woff2|svg)(\?v=\d+\.\d+\.\d+)?$/,
-      use: {
-        loader: 'file-loader',
-        options : { name: '[name].[ext]' },
       },
-    }  
+      {
+        // Capture eot, ttf, woff, and woff2
+        test: /\.(eot|ttf|woff|woff2|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'file-loader',
+          options : { name: '[name].[ext]' },
+        },
+      },
+      {
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+          options: {
+            minimize: true
+          }
+        }]
+      }
     
     ]
   },
