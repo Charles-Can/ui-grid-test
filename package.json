@@ -1,7 +1,8 @@
 {
   "name": "ui-grid-test",
   "scripts": {
-    "start": "concurrently \"lite-server\" \"webpack --progress --colors --watch\""
+    "start": "concurrently \"lite-server\" \"webpack --progress --colors --watch\"",
+    "compile": "webpack --progress --colors"
   },
   "version": "1.0.0",
   "main": "index.js",
@@ -12,12 +13,19 @@
     "angular": "1.5.8",
     "angular-route": "1.5.8",
     "angular-ui-grid": "^4.0.2",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "3",
     "concurrently": "^3.4.0",
     "guid": "0.0.12",
     "lite-server": "^2.2.2",
     "moment": "^2.17.1",
     "webpack": "^2.2.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "css-loader": "^0.26.4",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.10.1",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.13.2"
+  }
 }

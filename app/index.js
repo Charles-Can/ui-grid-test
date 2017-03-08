@@ -1,4 +1,5 @@
 var angular = require('angular');
+require('./app.scss');
 
 angular.module('gridTest', [
   require('angular-ui-grid'),

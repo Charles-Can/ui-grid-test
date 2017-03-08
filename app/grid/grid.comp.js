@@ -1,4 +1,5 @@
 import { AssetService } from '../asset.service.js';
+require('./index.scss');
 
 class GridController {
   constructor(assetService, countService) {
@@ -73,7 +74,9 @@ angular.module('gridTest')
   .service('assetService', AssetService)
   .component('myGrid', {
     template: `
-      <div id="grid" ui-grid="$ctrl.gridOptions" ui-grid-pinning></div>
+      <div class="ui-grid-comp">
+        <div id="grid" ui-grid="$ctrl.gridOptions" ui-grid-pinning></div>
+      </div>
     `,
     controller: GridController
   });
