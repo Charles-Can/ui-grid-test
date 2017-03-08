@@ -7,33 +7,7 @@ angular.module('gridTest', [
   'ui.grid.pinning'
 ])
   .component('myApp', {
-    template: `
-      <div class="container">
-        <div class="row">
-          <div class="col-md-5 ctrl">
-            <a href="ui-grid" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('ui-grid'), 'btn-primary': vm.isActive('ui-grid')}">UI Grid</a>
-            <a href="home-brew" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('home-brew'), 'btn-primary': vm.isActive('home-brew')}">Home Brewed Grid</a>
-          </div>
-
-          <div class="col-md-7 ctrl">
-            <div class="pull-right">
-              <label>Assets</label>
-              <select ng-model="vm.assetCount" ng-change="vm.optionChange()">
-                <option ng-repeat="num in vm.assets track by $index" value="{{num}}">{{num}}</option>
-              </select>
-              <label>Weeks</label>
-              <select ng-model="vm.dayCount" ng-change="vm.optionChange()">
-                <option ng-repeat="num in vm.days track by $index" value="{{num}}">{{num/7}} | {{num}}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div ng-view></div>
-        </div>
-      </div>
-    `,
+    template: require('./index.html'),
     controller: function($route, $rootScope, countService) {
       this.activeRoute = '/';
       this.dayCount = '7';
@@ -46,7 +20,7 @@ angular.module('gridTest', [
 
       this.$onInit = function() {
         countService.setCount(parseInt(this.assetCount), parseInt(this.dayCount));
-        for(let i=1; i <= 50; i++) {
+        for(let i=1; i <= 70; i++) {
           this.assets.push(i * 5);
           this.days.push(i * 7);
         }

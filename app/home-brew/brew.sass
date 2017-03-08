@@ -1,0 +1,129 @@
+// Add percentage of white to a color
+@function tint($color, $percent)
+  @return mix(white, $color, $percent)
+
+
+// Add percentage of black to a color
+@function shade($color, $percent)
+  @return mix(black, $color, $percent)
+
+.home-brew 
+
+  .ctrls
+    padding-top: 20px
+    
+  $side-bar-width: 350px  
+
+  .chart-header 
+    overflow: hidden
+    position: relative
+    &:before
+      position: absolute
+      width: $side-bar-width
+      background: white
+      content: ""
+      top: 0
+      left: 0
+      bottom: 0
+    .wrap
+      overflow: hidden
+      padding-left: $side-bar-width + 1px
+    
+      .date
+        border-bottom: none !important
+        background: #ddd
+      
+  .chart
+    position: relative
+    border: 1px solid shade(#ddd, 20%)
+    overflow: hidden
+    max-height: 700px
+    margin: 0
+        
+    .side-bar
+      font-size: .95em
+      padding: 0 .5em
+      width: $side-bar-width
+      background: #ddd
+      float: left
+      margin-bottom: 17px
+      
+      .asset
+        padding: 15px 0 12px 0
+        margin-bottom: 15px
+        line-height: 1.2em
+        height: 75px
+      
+        font-size: .8em
+        img
+          margin: .25em
+          float: left
+          
+      .custom-state
+        clear: both
+        
+      .running-info
+        z-index: 22
+        margin: 0
+        position: absolute
+        left: 0
+        right: 17px
+        background: #ddd
+        border-top: 1px solid shade(#ddd, 20%)
+        border-bottom: 1px solid shade(#ddd, 20%)
+        padding-left: $side-bar-width
+        padding-right: 1em
+        pointer-events: none
+        li
+          display: inline-block
+          padding: .25em
+          pointer-events: all
+          
+          &.distance
+            float: left
+          &.operator
+            float: right
+            
+  .chart-body
+    position: relative
+    margin-left: $side-bar-width
+    height: 700px
+    overflow: auto
+    
+  .chart-body header, .chart-body .asset-data, .chart-header .wrap
+    display: flex
+    .date
+      flex: 0 0 45px
+      padding: .3em 0
+      border-right: 1px solid #a2a2a2
+      text-align: center
+
+  .asset-data
+    margin-bottom: 15px
+    height: 75px
+    .date
+      height: 100%
+      
+    .runtime
+      position: relative
+      width: 39px
+      height: 39px
+      top: 50%
+      margin: -21px auto 0 auto
+      background: shade(blue, 40%)
+      color: white
+      font-weight: 400
+      border-radius: 50%
+      padding: .8em 0
+      text-align: center
+      
+    .ratio
+      width: 40px
+      height: 20px
+      background: green
+      margin: 0 auto
+      
+      .idle
+        width: 80%
+        height: 100%
+        background: orange

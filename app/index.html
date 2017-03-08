@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 ctrl">
+      <a href="ui-grid" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('ui-grid'), 'btn-primary': vm.isActive('ui-grid')}">UI Grid</a>
+      <a href="home-brew" class="btn btn-md" ng-class="{'btn-default': !vm.isActive('home-brew'), 'btn-primary': vm.isActive('home-brew')}">Home Brewed Grid</a>
+    </div>
+
+    <div class="col-md-7 ctrl">
+      <div class="pull-right">
+        <label>Assets</label>
+        <select ng-model="vm.assetCount" ng-change="vm.optionChange()">
+          <option ng-repeat="num in vm.assets track by $index" value="{{num}}">{{num}}</option>
+        </select>
+        <label>Weeks</label>
+        <select ng-model="vm.dayCount" ng-change="vm.optionChange()">
+          <option ng-repeat="num in vm.days track by $index" value="{{num}}">{{num/7}} | {{num}} days</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div ng-view></div>
+  </div>
+</div>

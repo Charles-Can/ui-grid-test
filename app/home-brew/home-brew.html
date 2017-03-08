@@ -1,0 +1,31 @@
+<div class="home-brew">
+  <div class="chart-header">
+    <div class="wrap" ng-style="{'margin-left': -1 * $ctrl.left + 'px'}">      
+      <div class="date" ng-repeat="day in $ctrl.dayList track by $index">{{day}}</div>
+    </div>
+  </div>
+  <div class="chart">
+    <div class="side-bar" ng-style="{'margin-top' : -1 * $ctrl.top + 'px'}">
+      <div ng-repeat="asset in $ctrl.assetCol" class="asset">
+        <div class="icon"><img src="//placehold.it/35x35" /></div>
+        <ul class="list-unstyled">
+          <li class="asset-id">{{asset.assetId}}</li>
+          <li class="serial-number">{{asset.serialNumber}}</li>
+          <li class="make">Make </li>
+        </ul>
+        <div class="custom-state">Custom Asset State</div>
+        <ul class="running-info list-unstyled">
+          <li class="distance"><span>Distance:</span> 1000km</li>
+          <li class="operator"><span>Last Known Operator:</span> 65465465 - F. Flintstone</li>
+        </ul>
+      </div>
+    </div>
+    <div class="chart-body" scroll-reporter on-scroll="$ctrl.updateScroll(scrollTop, scrollLeft)">
+      <div class="asset-data" ng-repeat="asset in $ctrl.assetCol">
+        <div class="date" ng-repeat="day in asset.assetLocalDates">
+          <div class="runtime">{{day.segmentDuration.runningDurationSeconds}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
