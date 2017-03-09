@@ -1,10 +1,12 @@
 var angular = require('angular');
+require('angular-ui-grid')
 require('./app.scss');
 
 angular.module('gridTest', [
-  require('angular-ui-grid'),
+  'ui.grid',
   require('angular-route'),
-  'ui.grid.pinning'
+  'ui.grid.pinning',
+  'ui.grid.selection'
 ])
   .component('myApp', {
     template: require('./index.html'),

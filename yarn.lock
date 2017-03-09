@@ -70,15 +70,19 @@ angular-route@1.5.8:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/angular-route/-/angular-route-1.5.8.tgz#964093de7ec8dc5799bd56a93a6ce5f60095674b"
 
-angular-ui-grid@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/angular-ui-grid/-/angular-ui-grid-4.0.2.tgz#0e4ca1d5e6cc47ae4f534ccca1e711592ebf78ee"
+angular-ui-grid@3.2.1:
+  version "3.2.9"
+  resolved "https://registry.yarnpkg.com/angular-ui-grid/-/angular-ui-grid-3.2.9.tgz#f00f7a9c0daa287ad5c06d28b1f4ccfa1ae53880"
   dependencies:
-    angular ">=1.4.0 1.5.x"
+    angular ">=1.2.16 1.4.x"
 
-angular@1.5.8, "angular@>=1.4.0 1.5.x":
+angular@1.5.8:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.5.8.tgz#925a5392b8c212d09572dc446db7e01264e094cb"
+
+"angular@>=1.2.16 1.4.x":
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.4.14.tgz#9d0feaf60ce6e52ce50f49ee328656d1e1875c37"
 
 ansi-regex@^0.2.0, ansi-regex@^0.2.1:
   version "0.2.1"
@@ -334,7 +338,7 @@ browser-sync-ui@0.6.3:
     stream-throttle "^0.1.3"
     weinre "^2.0.0-pre-I0Z7U9OV"
 
-browser-sync@^2.12.3:
+browser-sync@^2.18.5:
   version "2.18.8"
   resolved "https://registry.yarnpkg.com/browser-sync/-/browser-sync-2.18.8.tgz#2fb4de253798d7cfb839afb9c2f801968490cec2"
   dependencies:
@@ -667,11 +671,11 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.6.0, commander@^2.2.0:
+commander@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.6.0.tgz#9df7e52fb2a0cb0fb89058ee80c3104225f37e1d"
 
-commander@2.9.x, commander@^2.9.0:
+commander@2.9.x, commander@^2.2.0, commander@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
   dependencies:
@@ -1852,11 +1856,11 @@ limiter@^1.0.5:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/limiter/-/limiter-1.1.0.tgz#6e2bd12ca3fcdaa11f224e2e53c896df3f08d913"
 
-lite-server@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/lite-server/-/lite-server-2.2.2.tgz#4644afe6c9146d850cfa0ad9a86a94f87156499e"
+lite-server@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/lite-server/-/lite-server-2.3.0.tgz#5b4cc8f5d5fd4836105480ab2ac48a3a0de2b0c8"
   dependencies:
-    browser-sync "^2.12.3"
+    browser-sync "^2.18.5"
     connect-history-api-fallback "^1.2.0"
     connect-logger "0.0.1"
     lodash "^4.11.1"
@@ -3635,7 +3639,7 @@ yargs-parser@^2.4.1:
     camelcase "^3.0.0"
     lodash.assign "^4.0.6"
 
-yargs-parser@^4.1.0:
+yargs-parser@^4.1.0, yargs-parser@^4.2.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-4.2.1.tgz#29cceac0dc4f03c6c87b4a9f217dd18c9f74871c"
   dependencies:
@@ -3652,7 +3656,7 @@ yargs@3.29.0:
     window-size "^0.1.2"
     y18n "^3.2.0"
 
-yargs@6.4.0, yargs@^6.0.0:
+yargs@6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-6.4.0.tgz#816e1a866d5598ccf34e5596ddce22d92da490d4"
   dependencies:
@@ -3689,6 +3693,24 @@ yargs@^4.7.1:
     window-size "^0.2.0"
     y18n "^3.2.1"
     yargs-parser "^2.4.1"
+
+yargs@^6.0.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-6.6.0.tgz#782ec21ef403345f830a808ca3d513af56065208"
+  dependencies:
+    camelcase "^3.0.0"
+    cliui "^3.2.0"
+    decamelize "^1.1.1"
+    get-caller-file "^1.0.1"
+    os-locale "^1.4.0"
+    read-pkg-up "^1.0.1"
+    require-directory "^2.1.1"
+    require-main-filename "^1.0.1"
+    set-blocking "^2.0.0"
+    string-width "^1.0.2"
+    which-module "^1.0.0"
+    y18n "^3.2.1"
+    yargs-parser "^4.2.0"
 
 yargs@~3.10.0:
   version "3.10.0"

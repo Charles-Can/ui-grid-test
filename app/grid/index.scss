@@ -1,5 +1,6 @@
 .ui-grid-comp {
   .runtime {
+    display: block;
     background: darkblue;
     color: white;
     width: 25px;
@@ -12,6 +13,10 @@
     position: relative;
     top: 50%;
     font-size: 0.8em;
+
+    &:hover, &:visited, &:active {
+      text-decoration: none;
+    }
   }
 
   .ratio {
@@ -28,5 +33,22 @@
 
   #grid {
     height: 850px;
+  }
+
+  .icon {
+    float: left;
+  }
+
+  .asset-info {
+    float: right;
+    width: 280px;
+    padding: 0 .25em;
+    margin: 0 .2em;
+    font-size: 12px;
+    line-height: 1em;
+
+    li:first-child {
+      font-weight: 700;
+    }
   }
 }
