@@ -17,7 +17,7 @@ angular.module('gridTest', [
       this.days=[];
       this.assets=[];
       $rootScope.$on('$routeChangeSuccess', ($event, cur) => {
-       this.activeRoute = cur.$$route.name;
+       this.activeRoute = cur.$$route.name || '/';
       });
 
       this.$onInit = function() {
