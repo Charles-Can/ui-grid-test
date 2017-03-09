@@ -177,11 +177,10 @@ class GridController {
               </a>
             `;
           }
-          console.log(def)
+
           columnDefs.push(def);
         }
         this.gridOptions.columnDefs = columnDefs;
-        console.log(this.gridOptions)
       });
   }
 
